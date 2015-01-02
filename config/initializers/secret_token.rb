@@ -16,4 +16,4 @@
 # Using secret_token for rails3 compatibility. Change to secret_key_base
 # to avoid deprecation warning.
 # Can be safely removed in a rails3 api-only application.
-MusicWalletAPI::Application.config.secret_token = '3515de39a63e9bf8768d3b001e65cbff27eb0bb3a7e10404047f0349b1d06d6dea1ce937d16e9e7fd0d6b5e9edb37fc4ca767bc370749649be61855d1e20dc29'
+MusicWalletAPI::Application.config.secret_token = ENV['SECRET_TOKEN']
