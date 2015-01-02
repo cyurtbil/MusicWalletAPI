@@ -4,19 +4,25 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.0.beta4'
 
 gem 'rails-api'
+gem 'arel', '6.0.0.beta2'
 
-gem 'spring', :group => :development
-
+gem 'rack-cors', :require => 'rack/cors'
 
 gem 'pg'
 
+gem 'rails_12factor', group: :production
+
+group :development do
+ gem 'bullet'
+ gem 'spring'
+end
 
 
 # To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.1.2'
+gem 'bcrypt-ruby', '~> 3.1.2'
 
 # To use Jbuilder templates for JSON
-# gem 'jbuilder'
+gem 'jbuilder'
 
 # Use unicorn as the app server
 # gem 'unicorn'
@@ -26,3 +32,12 @@ gem 'pg'
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
+
+group :development, :test do
+  gem 'rspec-rails', '~> 3.0.0'
+  gem 'factory_girl_rails'
+  gem 'faker'
+  gem 'pry-rails'
+  gem 'pry-byebug'
+  gem 'dotenv-rails'
+end
