@@ -207,6 +207,7 @@ DEPENDENCIES
   factory_girl_rails
   faker
   jbuilder
+  omniauth
   omniauth-soundcloud (~> 1.0.0)
   pg
   pry-byebug
