@@ -36,10 +36,10 @@ ActiveRecord::Schema.define(version: 20150105000543) do
   add_index "songs", ["wallet_id"], name: "index_songs_on_wallet_id", using: :btree
 
   create_table "users", force: true do |t|
-    t.string  "email"
     t.string  "username"
+    t.string  "image_url"
     t.integer "followers_count"
-    t.integer "following_count"
+    t.integer "followings_count"
   end
 
   create_table "wallets", force: true do |t|

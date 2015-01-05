@@ -1,10 +1,10 @@
 class CreateUsers < ActiveRecord::Migration
   def change
     create_table :users do |t|
-      t.string :email
       t.string :username
+      t.string :image_url
       t.integer :followers_count
-      t.integer :following_count
+      t.integer :followings_count
     end
   end
 end

@@ -11,8 +11,6 @@ gem 'rack-cors', :require => 'rack/cors'
 
 gem 'pg'
 
-gem 'omniauth-soundcloud', '~> 1.0.0'
-gem 'omniauth'
 gem 'soundcloud'
 
 gem 'rails_12factor', group: :production
