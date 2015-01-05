@@ -11,10 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150102151906) do
+ActiveRecord::Schema.define(version: 20150105000543) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "authentications", force: true do |t|
+    t.string   "provider"
+    t.string   "uid"
+    t.string   "access_token"
+    t.string   "refresh_token"
+    t.datetime "expires_in"
+    t.string   "scope"
+    t.integer  "user_id"
+  end
+
+  add_index "authentications", ["user_id"], name: "index_authentications_on_user_id", using: :btree
 
   create_table "songs", force: true do |t|
     t.string  "name"
@@ -24,7 +36,7 @@ ActiveRecord::Schema.define(version: 20150102151906) do
   add_index "songs", ["wallet_id"], name: "index_songs_on_wallet_id", using: :btree
 
   create_table "users", force: true do |t|
-    t.string  "uid"
+    t.string  "email"
     t.string  "username"
     t.integer "followers_count"
     t.integer "following_count"
