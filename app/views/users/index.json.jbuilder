@@ -4,5 +4,5 @@ json.users @users do |user|
   json.image_url user.image_url
   json.followings_count user.followings_count
   json.followers_count user.followers_count
-  json.authentications user.authentications
+  json.authentication user.authentication
 end

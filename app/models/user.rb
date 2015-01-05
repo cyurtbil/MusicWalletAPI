@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   has_many :wallets
-  has_many :authentications
+  has_one :authentication
+  validates :username, uniqueness: true, on: :login
 
   def self.get_user_params(params)
       client = Soundcloud.new(client_id: ENV["SC_CLIENT_ID"],
@@ -11,7 +12,7 @@ class User < ActiveRecord::Base
 
       client_with_token = Soundcloud.new(access_token: access_token)
       current_user = client.get('/me')
-      
+
       return {params: params, access_token: access_token, current_user: current_user}
   end
 end
