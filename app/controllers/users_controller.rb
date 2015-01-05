@@ -8,20 +8,13 @@ class UsersController < ApplicationController
     auth_params = User.get_user_params(params)
     existing_user = User.find_by_username(auth_params[:current_user]["username"])
     if !existing_user
-      @user = User.new({username: auth_params[:current_user]["username"]})
-      @user.image_url = auth_params[:current_user]["avatar_url"]
-      @user.followers_count = auth_params[:current_user]["followers_count"]
-      @user.followings_count = auth_params[:current_user]["followings_count"]
+      @user = User.create_user(auth_params)
       if auth_params && @user.save
-        @authentication = Authentication.new({user_id: @user.id})
-        @authentication.provider = params[:provider]
-        @authentication.uid = auth_params[:current_user]["id"]
-        @authentication.access_token = auth_params[:access_token]["access_token"]
-        @authentication.scope = auth_params[:access_token]["scope"]
+        @authentication = Authentication.create_user_authentication(params, auth_params, @user)
         @authentication.save
         redirect_to "http://localhost:9000/#/home" 
       else
-        render text: "Fails to login"
+        head :unauthorized
       end
     else
       redirect_to "http://localhost:9000/#/home" 

@@ -15,4 +15,12 @@ class User < ActiveRecord::Base
 
       return {params: params, access_token: access_token, current_user: current_user}
   end
+
+  def self.create_user(auth_params)
+    user = self.new({username: auth_params[:current_user]["username"]})
+    user.image_url = auth_params[:current_user]["avatar_url"]
+    user.followers_count = auth_params[:current_user]["followers_count"]
+    user.followings_count = auth_params[:current_user]["followings_count"]
+    return user
+  end
 end
