@@ -10,10 +10,8 @@ class User < ActiveRecord::Base
       access_token = client.exchange_token(code: code)
 
       client_with_token = Soundcloud.new(access_token: access_token)
-
-      authorized_client = Soundcloud.new(client_id: ENV["SC_CLIENT_ID"],
-                              client_secret: ENV["SC_CLIENT_SECRET"],
-                              refresh_token: client.options[:access_token]["refresh_token"])
-      return {client: authorized_client, params: params, access_token: access_token}
+      current_user = client.get('/me')
+      
+      return {params: params, access_token: access_token, current_user: current_user}
   end
 end
