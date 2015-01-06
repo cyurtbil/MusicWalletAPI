@@ -27,4 +27,9 @@ class UsersController < ApplicationController
       end
     end
   end
+
+  def logout
+    session[:user_id] = nil
+    redirect_to "http://localhost:9000/#/"
+  end
 end

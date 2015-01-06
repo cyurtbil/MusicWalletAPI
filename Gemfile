@@ -12,6 +12,7 @@ gem 'rack-cors', :require => 'rack/cors'
 gem 'pg'
 
 gem 'soundcloud'
+gem 'redis-rails'
 
 gem 'rails_12factor', group: :production
 
