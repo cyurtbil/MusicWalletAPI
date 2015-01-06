@@ -36,7 +36,6 @@ ActiveRecord::Schema.define(version: 20150105000543) do
   create_table "users", force: true do |t|
     t.string  "username"
     t.string  "image_url"
-    t.string  "token"
     t.integer "followers_count"
     t.integer "followings_count"
   end

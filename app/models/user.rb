@@ -23,4 +23,8 @@ class User < ActiveRecord::Base
     user.followings_count = auth_params[:current_user]["followings_count"]
     return user
   end
+
+  def self.update_existing_user(existing_user, auth_params)
+    existing_user.authentication.update(access_token: auth_params[:access_token]["access_token"])
+  end
 end
