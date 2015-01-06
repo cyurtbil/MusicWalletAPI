@@ -11,4 +11,3 @@
 /log/*.log
 /tmp
 .env
-dump.rdb

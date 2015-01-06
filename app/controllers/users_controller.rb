@@ -12,7 +12,6 @@ class UsersController < ApplicationController
       if auth_params && user.save
         authentication = Authentication.create_user_authentication(params, auth_params, user)
         authentication.save
-        session[:user_id] = user.id
         redirect_to "http://localhost:9000/#/home" 
       else
         head :unauthorized
@@ -20,7 +19,6 @@ class UsersController < ApplicationController
     else
       if auth_params && existing_user.authentication
         User.update_existing_user(existing_user, auth_params)
-        session[:user_id] = existing_user.id
         redirect_to "http://localhost:9000/#/home"
       else
         head :unauthorized
@@ -28,8 +26,12 @@ class UsersController < ApplicationController
     end
   end
 
+  def get_current_user
+    current_user = User.get_current_user
+    render json: {current_user: current_user}, status: 200
+  end
+
   def logout
-    session[:user_id] = nil
-    redirect_to "http://localhost:9000/#/"
+    head :ok
   end
 end

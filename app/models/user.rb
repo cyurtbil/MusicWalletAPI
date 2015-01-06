@@ -11,9 +11,9 @@ class User < ActiveRecord::Base
       access_token = client.exchange_token(code: code)
 
       client_with_token = Soundcloud.new(access_token: access_token)
-      current_user = client.get('/me')
-
-      return {params: params, access_token: access_token, current_user: current_user}
+      @current_user = client.get('/me')
+      binding.pry
+      return {params: params, access_token: access_token, current_user: @current_user}
   end
 
   def self.create_user(auth_params)
@@ -26,5 +26,13 @@ class User < ActiveRecord::Base
 
   def self.update_existing_user(existing_user, auth_params)
     existing_user.authentication.update(access_token: auth_params[:access_token]["access_token"])
+  end
+
+  def self.get_current_user
+    binding.pry
+    @current_user_params = {username: @current_user[:username], 
+                            image_url: @current_user[:avatar_url],
+                            followings_count: @current_user[:followings_count],
+                            followers_count: @current_user[:followers_count]}
   end
 end
