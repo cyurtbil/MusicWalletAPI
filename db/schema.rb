@@ -17,13 +17,11 @@ ActiveRecord::Schema.define(version: 20150105000543) do
   enable_extension "plpgsql"
 
   create_table "authentications", force: true do |t|
-    t.string   "provider"
-    t.string   "uid"
-    t.string   "access_token"
-    t.string   "refresh_token"
-    t.datetime "expires_in"
-    t.string   "scope"
-    t.integer  "user_id"
+    t.string  "provider"
+    t.string  "uid"
+    t.string  "access_token"
+    t.string  "scope"
+    t.integer "user_id"
   end
 
   add_index "authentications", ["user_id"], name: "index_authentications_on_user_id", using: :btree
@@ -38,6 +36,7 @@ ActiveRecord::Schema.define(version: 20150105000543) do
   create_table "users", force: true do |t|
     t.string  "username"
     t.string  "image_url"
+    t.string  "token"
     t.integer "followers_count"
     t.integer "followings_count"
   end

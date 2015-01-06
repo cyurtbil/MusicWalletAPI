@@ -17,7 +17,11 @@ class UsersController < ApplicationController
         head :unauthorized
       end
     else
-      redirect_to "http://localhost:9000/#/home" 
+      if auth_params && existing_user.authentication
+        redirect_to "http://localhost:9000/#/home"
+      else
+        head :unauthorized
+      end
     end
   end
 end
