@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
 
   def self.get_current_user
     if !@existing_user
-      @current_user_params = User.find_by({username: @current_user[:username]})
+      @current_user_params = self.find_by({username: @current_user[:username]})
     else
       @current_user_params = @existing_user
     end

@@ -6,7 +6,4 @@ class Cloud
                             redirect_uri: ENV["REDIRECT_URI"])
     return {url: client.authorize_url(scope: 'non-expiring')}
   end
-
-  def self.authorize_with_cloud
-  end
 end
