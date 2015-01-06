@@ -12,7 +12,6 @@ class User < ActiveRecord::Base
 
       client_with_token = Soundcloud.new(access_token: access_token)
       @current_user = client.get('/me')
-      binding.pry
       return {params: params, access_token: access_token, current_user: @current_user}
   end
 
@@ -29,8 +28,8 @@ class User < ActiveRecord::Base
   end
 
   def self.get_current_user
-    binding.pry
-    @current_user_params = {username: @current_user[:username], 
+    @current_user_params = {username: @current_user[:username],
+                            token: SecureRandom.uuid.gsub(/\-/, ''),
                             image_url: @current_user[:avatar_url],
                             followings_count: @current_user[:followings_count],
                             followers_count: @current_user[:followers_count]}
