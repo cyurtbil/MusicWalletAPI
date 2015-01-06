@@ -18,20 +18,22 @@ class User < ActiveRecord::Base
   def self.create_user(auth_params)
     user = self.new({username: auth_params[:current_user]["username"]})
     user.image_url = auth_params[:current_user]["avatar_url"]
+    user.token = SecureRandom.uuid.gsub(/\-/, '')
     user.followers_count = auth_params[:current_user]["followers_count"]
     user.followings_count = auth_params[:current_user]["followings_count"]
     return user
   end
 
   def self.update_existing_user(existing_user, auth_params)
-    existing_user.authentication.update(access_token: auth_params[:access_token]["access_token"])
+    @existing_user = existing_user
+    @existing_user.authentication.update(access_token: auth_params[:access_token]["access_token"])
   end
 
   def self.get_current_user
-    @current_user_params = {username: @current_user[:username],
-                            token: SecureRandom.uuid.gsub(/\-/, ''),
-                            image_url: @current_user[:avatar_url],
-                            followings_count: @current_user[:followings_count],
-                            followers_count: @current_user[:followers_count]}
+    if !@existing_user
+      @current_user_params = User.find_by({username: @current_user[:username]})
+    else
+      @current_user_params = @existing_user
+    end
   end
 end
