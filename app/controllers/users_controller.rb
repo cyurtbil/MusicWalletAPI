@@ -32,6 +32,7 @@ class UsersController < ApplicationController
   end
 
   def logout
+    User.log_user_out
     head :ok
   end
 end
