@@ -8,3 +8,5 @@
 
 User.delete_all
 Authentication.delete_all
+Wallet.delete_all
+Song.delete_all

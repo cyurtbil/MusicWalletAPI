@@ -3,19 +3,10 @@ class Wallet < ActiveRecord::Base
   belongs_to :user
 
   def self.create_wallets(user)
-    self.new([{name: 'Dark'},
-              {name: 'Chill'},
-              {name: 'Happy'},
-              {name: 'Party'},
-              {name: 'Dance'},
-              {name: 'Sport'},
-              {name: 'Mixed Moods'},
-              {name: 'Pumped'},
-              {name: 'Sad'},
-              {name: 'Angry'},
-              {name: 'Dreamy'},
-              {name: 'Illegal'}])
-    self.all.user_id = user.id
-    self.save
+    wallet_names = ['Dark', 'Chill', 'Party', 'Happy', 'Dance', 'Sport', 'Mixed Moods', 'Pumped', 'Sad', 'Angry', 'Dreamy', 'Illegal']
+
+    wallet_names.each do |wallet|
+      self.create({name: wallet, user_id: user.id})
+    end
   end
 end

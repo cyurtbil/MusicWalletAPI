@@ -12,6 +12,7 @@ class UsersController < ApplicationController
       if auth_params && user.save
         authentication = Authentication.create_user_authentication(params, auth_params, user)
         authentication.save
+        Wallet.create_wallets(user)
         redirect_to "http://localhost:9000/#/home" 
       else
         head :unauthorized
