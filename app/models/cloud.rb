@@ -11,6 +11,10 @@ class Cloud
     client = Soundcloud.new(client_id: ENV["SC_CLIENT_ID"])
     binding.pry
     tracks = client.get('/tracks', q: params[:title], limit: 10)
+    urls = create_url_for_tracks(tracks)
+  end
+
+  def create_url_for_tracks(tracks)
     urls = []
     tracks.each do |track|
       src = "https://w.soundcloud.com/player/?visual=true&url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F#{track[:id]}&show_artwork=true&client_id=#{ENV["SC_CLIENT_ID"]}"
