@@ -7,4 +7,6 @@ Rails.application.routes.draw do
   get 'users/get_current_user'
   match '/auth/:provider/callback', to: 'users#login', via: [:get, :post]
   get '/logout', to: 'users#logout'
+
+  post 'cloud/get_tracks'
 end
