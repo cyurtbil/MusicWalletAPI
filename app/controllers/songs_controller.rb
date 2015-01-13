@@ -4,7 +4,7 @@ class SongsController < ApplicationController
   end
 
   def create
-    @song = Song.find(params[:id])
+    @song = Song.new(song_params)
 
     if @song.save
       render json: @song, status: :created
