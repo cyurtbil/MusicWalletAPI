@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   resources :users, only: [:index]
-  resources :wallets, only: [:index]
+  resources :wallets, only: [:index, :show]
   resources :songs
 
   get 'cloud/get_redirect_uri'
