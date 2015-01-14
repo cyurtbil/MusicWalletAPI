@@ -19,6 +19,7 @@ class UsersController < ApplicationController
       end
     else
       if auth_params && existing_user
+        existing_user.update({token: SecureRandom.uuid.gsub(/\-/, '')})
         authentication = Authentication.create_user_authentication(params, auth_params, existing_user)
         authentication.save
         redirect_to "http://localhost:9000/#/home/#{existing_user.username}"
@@ -29,7 +30,9 @@ class UsersController < ApplicationController
   end
 
   def get_current_user
-    current_user = User.find_by({username: params[:username]})
+    binding.pry
+    username = Base64.decode64(params[:username])
+    current_user = User.find_by({username: username})
     if current_user
       if current_user.authentication
         render json: {current_user: current_user}, status: 200
