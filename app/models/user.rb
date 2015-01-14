@@ -23,24 +23,4 @@ class User < ActiveRecord::Base
     user.followings_count = auth_params[:current_user]["followings_count"]
     return user
   end
-
-  def self.update_existing_user(existing_user, auth_params)
-    @existing_user = existing_user
-    @existing_user.authentication.update(access_token: auth_params[:access_token]["access_token"])
-  end
-
-  def self.get_current_user
-    if @existing_user
-      @current_user_params = @existing_user
-    elsif @current_user
-      @current_user_params = self.find_by({username: @current_user[:username]})
-    else
-      @current_user_params = nil
-    end
-  end
-
-  def self.log_user_out
-    @current_user = nil
-    @existing_user = nil
-  end
 end

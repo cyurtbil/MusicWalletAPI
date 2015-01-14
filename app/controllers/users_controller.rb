@@ -13,14 +13,15 @@ class UsersController < ApplicationController
         authentication = Authentication.create_user_authentication(params, auth_params, user)
         authentication.save
         Wallet.create_wallets(user)
-        redirect_to "http://localhost:9000/#/home" 
+        redirect_to "http://localhost:9000/#/home/#{user.username}"
       else
         head :unauthorized
       end
     else
-      if auth_params && existing_user.authentication
-        User.update_existing_user(existing_user, auth_params)
-        redirect_to "http://localhost:9000/#/home"
+      if auth_params && existing_user
+        authentication = Authentication.create_user_authentication(params, auth_params, existing_user)
+        authentication.save
+        redirect_to "http://localhost:9000/#/home/#{existing_user.username}"
       else
         head :unauthorized
       end
@@ -28,12 +29,21 @@ class UsersController < ApplicationController
   end
 
   def get_current_user
-    current_user = User.get_current_user
-    render json: {current_user: current_user}, status: 200
+    current_user = User.find_by({username: params[:username]})
+    if current_user
+      if current_user.authentication
+        render json: {current_user: current_user}, status: 200
+      else
+        head :unauthorized
+      end
+    else
+      head :unauthorized
+    end
   end
 
   def logout
-    User.log_user_out
+    current_user_auth = Authentication.find_by({user_id: params[:current_user][:id]})
+    current_user_auth.destroy
     head :ok
   end
 end
