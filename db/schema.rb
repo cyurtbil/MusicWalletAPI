@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20150105000543) do
   add_index "authentications", ["user_id"], name: "index_authentications_on_user_id", using: :btree
 
   create_table "songs", force: true do |t|
-    t.string  "name"
+    t.string  "url"
     t.integer "wallet_id"
   end
 
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 20150105000543) do
 
   create_table "users", force: true do |t|
     t.string  "username"
+    t.string  "password_digest"
     t.string  "token"
     t.string  "image_url"
     t.integer "followers_count"
