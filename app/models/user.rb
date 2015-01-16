@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
 
       client_with_token = Soundcloud.new(access_token: access_token)
       current_user = client.get('/me')
+      access_token[:access_token].gsub(/\-/, '')
       return {params: params, access_token: access_token, current_user: current_user}
   end
 

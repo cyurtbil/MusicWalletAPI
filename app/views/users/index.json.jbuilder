@@ -6,10 +6,10 @@ json.users @users do |user|
   json.followings_count user.followings_count
   json.followers_count user.followers_count
   json.is_authenticated user.authentication.nil?
-  # json.wallets user.wallets do |wallet|
-  #   json.id wallet.id
-  #   json.name wallet.name
-  #   json.user_id wallet.user_id
-  #   json.songs wallet.songs
-  # end
+  json.wallets user.wallets do |wallet|
+    json.id wallet.id
+    json.name wallet.name
+    json.user_id wallet.user_id
+    json.songs wallet.songs
+  end
 end
