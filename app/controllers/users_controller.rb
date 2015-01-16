@@ -4,43 +4,48 @@ class UsersController < ApplicationController
     @users = User.all.includes([:wallets])
   end
 
+  def create_different
+    user = User.new({token: SecureRandom.uuid.gsub(/\-/, '')})
+    render json: user, status: 200
+  end
+
+  def store_user
+    user = User.new({token: params[:info]["token"]})
+    User.store_current_user(user)
+    render json: {stored: true}, status: 200
+  end
+
   def login
     auth_params = User.get_user_params(params)
     existing_user = User.find_by_username(auth_params[:current_user]["username"])
     if !existing_user
-      user = User.create_user(auth_params)
+      user = User.create_user(auth_params, User.get_current_user)
       if auth_params && user.save
-        authentication = Authentication.create_user_authentication(params, auth_params, user)
-        authentication.save
         Wallet.create_wallets(user)
-        redirect_to "http://localhost:9000/#/home/#{user.username}"
+        authentication = Authentication.create_user_authentication(params, auth_params, user)
+        if authentication.save
+          redirect_to "http://localhost:9000/#/home"
+        else
+          head :unauthorized
+        end
       else
         head :unauthorized
       end
     else
       if auth_params && existing_user
-        existing_user.update({token: SecureRandom.uuid.gsub(/\-/, '')})
+        token = User.get_current_user.token
+        existing_user.update({token: token})
         authentication = Authentication.create_user_authentication(params, auth_params, existing_user)
         authentication.save
-        redirect_to "http://localhost:9000/#/home/#{existing_user.username}"
+        redirect_to "http://localhost:9000/#/home"
+        # if authentication.save
+        #   redirect_to "http://localhost:9000/#/home"
+        # else
+        #   head :unauthorized
+        # end
       else
         head :unauthorized
       end
-    end
-  end
-
-  def get_current_user
-    binding.pry
-    username = Base64.decode64(params[:username])
-    current_user = User.find_by({username: username})
-    if current_user
-      if current_user.authentication
-        render json: {current_user: current_user}, status: 200
-      else
-        head :unauthorized
-      end
-    else
-      head :unauthorized
     end
   end
 

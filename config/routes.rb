@@ -5,7 +5,9 @@ Rails.application.routes.draw do
   resources :songs
 
   get 'cloud/get_redirect_uri'
-  post 'users/get_current_user'
+  get 'users/create_different'
+  post 'users/store_user'
+  get 'users/get_current_user'
   match '/auth/:provider/callback', to: 'users#login', via: [:get, :post]
   post '/logout', to: 'users#logout'
 
