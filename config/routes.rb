@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   resources :wallets, only: [:index, :show]
   resources :songs
 
-  get 'cloud/get_redirect_uri'
   post 'cloud/get_tracks'
 
   post '/login', to: 'users#login'
