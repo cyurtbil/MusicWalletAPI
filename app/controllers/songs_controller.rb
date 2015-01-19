@@ -13,6 +13,13 @@ class SongsController < ApplicationController
     end
   end
 
+  def destroy
+    @song = Song.find(params[:id])
+    @song.destroy
+
+    head :no_content
+  end
+
   private 
     def song_params
       params.require(:song).permit(:url, :wallet_id)
