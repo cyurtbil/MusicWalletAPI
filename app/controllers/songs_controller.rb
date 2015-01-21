@@ -13,6 +13,15 @@ class SongsController < ApplicationController
     end
   end
 
+  def update
+    @song = Song.find(params[:id])
+    if @song.update(song_params)
+      head :no_content
+    else
+      render json: @song.errors, status: :unprocessable_entity
+    end
+  end
+
   def destroy
     @song = Song.find(params[:id])
     @song.destroy
