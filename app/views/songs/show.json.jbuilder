@@ -1,0 +1,1 @@
+json.(@song, :id, :url, :wallet_id)
