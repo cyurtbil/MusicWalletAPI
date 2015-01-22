@@ -10,5 +10,6 @@ json.users @users do |user|
     json.name wallet.name
     json.user_id wallet.user_id
     json.songs wallet.songs
+    json.song_count wallet.songs.length
   end
 end
