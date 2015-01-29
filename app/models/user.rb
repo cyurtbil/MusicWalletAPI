@@ -1,6 +1,5 @@
 class User < ActiveRecord::Base
   has_many :wallets
-  has_one :authentication
   validates :username, uniqueness: true, on: :create
 
   has_secure_password
